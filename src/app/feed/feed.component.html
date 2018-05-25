@@ -1,0 +1,27 @@
+<div *ngIf="(feed$ | async)?.length; else loading">
+  <mat-card>
+    <mat-list>
+      <h3 mat-subheader>Feed</h3>
+      <mat-list-item *ngFor="let feed of feed$ | async; last as l">
+        <a [href]="feed.url" mat-line>{{ feed.title }} <small>({{ feed.domain }})</small></a>
+        <p mat-line>
+          <span>{{ feed.points }}</span>
+          points by <span>{{ feed.user }}</span> -
+          {{ feed.time_ago }} | {{ feed.comments_count }} comments
+        </p>
+        <mat-divider *ngIf="!l"></mat-divider>
+      </mat-list-item>
+    </mat-list>
+    <button *ngIf="page > 1" mat-raised-button color="warn" [routerLink]="['/feed', page - 1]">
+      ‹ Prev
+    </button>
+    <button mat-raised-button color="warn" [routerLink]="['/feed', page + 1]">
+      More ›
+    </button>
+  </mat-card>
+</div>
+<ng-template #loading>
+  Loading...
+</ng-template>
+
+
